@@ -4,38 +4,62 @@ import { ApolloServer, gql } from "apollo-server";
 // that together define the "shape" of queries that are executed against
 // your data.
 const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
+  type Pokemon {
+    name: String
+    url: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  # clients can execute, along with the return type for each.
   type Query {
-    books: [Book]
+    pokemon: [Pokemon]
   }
 `;
 
-const books = [
+const pokemon = [
   {
-    title: "The Awakening",
-    author: "Kate Chopin",
+    name: "bulbasaur",
+    url: "https://pokeapi.co/api/v2/pokemon/1/",
   },
   {
-    title: "City of Glass",
-    author: "Paul Auster",
+    name: "ivysaur",
+    url: "https://pokeapi.co/api/v2/pokemon/2/",
+  },
+  {
+    name: "venusaur",
+    url: "https://pokeapi.co/api/v2/pokemon/3/",
+  },
+  {
+    name: "charmander",
+    url: "https://pokeapi.co/api/v2/pokemon/4/",
+  },
+  {
+    name: "charmeleon",
+    url: "https://pokeapi.co/api/v2/pokemon/5/",
+  },
+  {
+    name: "charizard",
+    url: "https://pokeapi.co/api/v2/pokemon/6/",
+  },
+  {
+    name: "squirtle",
+    url: "https://pokeapi.co/api/v2/pokemon/7/",
+  },
+  {
+    name: "wartortle",
+    url: "https://pokeapi.co/api/v2/pokemon/8/",
+  },
+  {
+    name: "blastoise",
+    url: "https://pokeapi.co/api/v2/pokemon/9/",
   },
 ];
 
 // Resolvers define the technique for fetching the types defined in the
-// schema. This resolver retrieves books from the "books" array above.
+// schema. This resolver retrieves pokemons from the "pokemon" array above.
 const resolvers = {
   Query: {
-    books: () => books,
+    pokemon: () => pokemon,
   },
 };
 
