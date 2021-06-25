@@ -9,10 +9,30 @@ const typeDefs = gql`
     url: String
   }
 
+  type Element {
+    slot: Number
+    type: {
+      name: String
+      url: String
+    }
+  }
+
+  type PokemonDetail {
+    height: Int
+  types: [ Element]
+  weight: Int
+  base_experience: Int
+  forms: [
+    {
+      name: String
+      url: String
+    }
+  ]
+  }
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each.
   type Query {
-    pokemon: [Pokemon]
+    pokemons: [Pokemon]
   }
 `;
 
