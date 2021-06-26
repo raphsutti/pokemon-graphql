@@ -10,6 +10,7 @@ type Query {
 type Pokemons {
   count: Int
   results: [Pokemon]
+  hasNextPage: Boolean
 }
 
 type Pokemon {
@@ -32,6 +33,9 @@ const resolvers = {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
       return response.json()
     }
+  },
+  Pokemons: {
+    hasNextPage: (parent) => parent.next !== null
   },
   Pokemon: {
     pokemonDetail: async (parent) => {
