@@ -19,6 +19,7 @@ const typeDefs = gql`
   }
 
   type PokemonDetail {
+    id: Int
     height: Int
     weight: Int
     sprite: String
