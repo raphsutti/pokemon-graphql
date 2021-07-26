@@ -29,7 +29,86 @@ const typeDefs = gql`
   }
 `;
 
-const resolvers = {
+interface HelloArg {
+  name: string;
+}
+
+interface PokemonDetail {
+  id: number;
+  height: number;
+  weight: number;
+  sprite: string;
+  spriteBack: string;
+  spriteShiny: string;
+  spriteShinyBack: string;
+}
+
+interface Pokemon {
+  name: string;
+  pokemonDetail: PokemonDetail;
+}
+
+interface Pokemons {
+  count: number;
+  results: [Pokemon];
+  hasNextPage: boolean;
+}
+
+interface GetPokemonsArg {
+  offset: number;
+  limit: number;
+}
+
+interface HasNextPageArg {
+  next: string;
+}
+
+interface PokemonDetailArg {
+  url: string;
+}
+
+interface PokemonDetail {
+  id: number;
+  height: number;
+  weight: number;
+  sprite: string;
+  spriteBack: string;
+  spriteShiny: string;
+  spriteShinyBack: string;
+}
+
+interface SpriteArg {
+  sprites: {
+    front_default: string;
+    back_default: string;
+    front_shiny: string;
+    back_shiny: string;
+  };
+}
+
+type Resolvers = {
+  Query: {
+    hello: (parent: unknown, arg: HelloArg) => string;
+    getPokemons: (parent: unknown, arg: GetPokemonsArg) => Promise<Pokemons>;
+  };
+
+  Pokemons: {
+    hasNextPage: (parent: HasNextPageArg) => boolean;
+  };
+
+  Pokemon: {
+    pokemonDetail: (parent: PokemonDetailArg) => Promise<PokemonDetail>;
+  };
+
+  PokemonDetail: {
+    sprite: (parent: SpriteArg) => string;
+    spriteBack: (parent: SpriteArg) => string;
+    spriteShiny: (parent: SpriteArg) => string;
+    spriteShinyBack: (parent: SpriteArg) => string;
+  };
+};
+
+const resolvers: Resolvers = {
   Query: {
     hello: (_, { name }) => `Hello ${name}`,
     getPokemons: async (_, { offset, limit }) => {
@@ -56,7 +135,10 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
 
 server.listen().then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
